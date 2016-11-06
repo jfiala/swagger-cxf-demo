@@ -1,0 +1,210 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>io.swagger</groupId>
+  <artifactId>hello_swagger2markup</artifactId>
+  <packaging>jar</packaging>
+  <name>hello_swagger2markup</name>
+  <version>1.0.0</version>
+  <prerequisites>
+    <maven>2.2.0</maven>
+  </prerequisites>
+
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <asciidoctor.input.directory>${project.basedir}/src/docs/asciidoc</asciidoctor.input.directory>
+        
+        <version.junit>4.12</version.junit>
+        <version.commons-beanutils>1.6.1</version.commons-beanutils>
+        <version.swagger2markup>1.1.0</version.swagger2markup>
+        <version.swagger2markup.maven>1.0.0</version.swagger2markup.maven>
+        <version.asciidoctorj>1.5.4</version.asciidoctorj>
+        <version.asciidoctorj-pdf>1.5.0-alpha.10.1</version.asciidoctorj-pdf>
+        <version.jruby>1.7.21</version.jruby>
+    </properties>
+
+    <dependencies>
+        
+        <!-- Test-Dependencies -->
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>${version.junit}</version>
+        </dependency>
+        
+        <!-- Asciidoctor -->
+        <dependency>
+            <groupId>io.github.swagger2markup</groupId>
+            <artifactId>swagger2markup</artifactId>
+            <version>${version.swagger2markup}</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>commons-beanutils</groupId>
+                    <artifactId>commons-beanutils</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+        <dependency>
+            <groupId>commons-beanutils</groupId>
+            <artifactId>commons-beanutils</artifactId>
+            <version>${version.commons-beanutils}</version>
+        </dependency>
+
+    </dependencies>
+
+    <build>
+        <plugins>
+            <!-- First, use the swagger2markup plugin to generate asciidoc -->
+            <plugin>
+                <groupId>io.github.swagger2markup</groupId>
+                <artifactId>swagger2markup-maven-plugin</artifactId>
+                <version>${version.swagger2markup.maven}</version>
+                <dependencies>
+                    <dependency>
+                        <groupId>io.github.swagger2markup</groupId>
+                        <artifactId>swagger2markup-import-files-ext</artifactId>
+                        <version>${version.swagger2markup.maven}</version>
+                    </dependency>
+                </dependencies>
+                <configuration>
+                    <config>
+                        <swagger2markup.markupLanguage>ASCIIDOC</swagger2markup.markupLanguage>
+                        <swagger2markup.pathsGroupedBy>TAGS</swagger2markup.pathsGroupedBy>
+                        <swagger2markup.outputLanguage>EN</swagger2markup.outputLanguage>
+                    </config>
+                </configuration>
+                <executions>
+                    <execution>
+                        <id>output</id>
+                        <phase>generate-resources</phase>
+                        <goals>
+                            <goal>convertSwagger2markup</goal>
+                        </goals>
+                        <configuration>
+                            <swaggerInput>${project.basedir}/../swagger-codegen-hello_cxf_server_devfest/src/main/resources/api/hello_world.json</swaggerInput>
+                            <outputDir>${project.build.directory}/asciidoc</outputDir>
+                        </configuration>
+                    </execution>
+               </executions>
+            </plugin>
+
+            <!-- Run the generated asciidoc through Asciidoctor to generate
+                 other documentation types, such as PDFs or HTML5 -->
+            <plugin>
+                <groupId>org.asciidoctor</groupId>
+                <artifactId>asciidoctor-maven-plugin</artifactId>
+                <!-- Include Asciidoctor PDF for pdf generation -->
+                <dependencies>
+                    <dependency>
+                        <groupId>org.asciidoctor</groupId>
+                        <artifactId>asciidoctorj-pdf</artifactId>
+                        <version>${version.asciidoctorj-pdf}</version>
+                    </dependency>
+                    <!-- Comment this section to use the default jruby artifact provided by the plugin -->
+                    <dependency>
+                        <groupId>org.jruby</groupId>
+                        <artifactId>jruby-complete</artifactId>
+                        <version>${version.jruby}</version>
+                    </dependency>
+                    <!-- Comment this section to use the default AsciidoctorJ artifact provided by the plugin -->
+                    <dependency>
+                        <groupId>org.asciidoctor</groupId>
+                        <artifactId>asciidoctorj</artifactId>
+                        <version>${version.asciidoctorj}</version>
+                    </dependency>
+                </dependencies>
+                <!-- Configure generic document generation settings -->
+                <configuration>
+                    <sourceDirectory>${asciidoctor.input.directory}</sourceDirectory>
+                    <sourceDocumentName>index.adoc</sourceDocumentName>
+                    <attributes>
+                        <doctype>book</doctype>
+                        <toc>left</toc>
+                        <toclevels>3</toclevels>
+                        <numbered />
+                        <hardbreaks />
+                        <sectlinks />
+                        <sectanchors />
+                        <generated>${project.build.directory}/asciidoc</generated>
+                    </attributes>
+                </configuration>
+                <!-- Since each execution can only handle one backend, run
+                     separate executions for each desired output type -->
+                <executions>
+                    <!-- API -->
+                    <execution>
+                        <id>output-api-html</id>
+                        <phase>generate-resources</phase>
+                        <goals>
+                            <goal>process-asciidoc</goal>
+                        </goals>
+                        <configuration>
+                            <backend>html5</backend>
+                            <outputDirectory>${project.build.directory}/asciidoc/html</outputDirectory>
+                            <generated>${project.build.directory}/asciidoc</generated>
+                            <!--sourceHighlighter>coderay</sourceHighlighter>
+                            <attributes>
+                                <linkcss>false</linkcss>
+                            </attributes-->
+                        </configuration>
+                    </execution>
+                    
+                    <execution>
+                        <id>output-api-pdf</id>
+                        <phase>generate-resources</phase>
+                        <goals>
+                            <goal>process-asciidoc</goal>
+                        </goals>
+                        <configuration>
+                            <backend>pdf</backend>
+                            <outputDirectory>${project.build.directory}/asciidoc/pdf</outputDirectory>
+                            <!--generated>${project.basedir}/src/asciidocs</generated-->
+                            <generated>${project.build.directory}/asciidoc</generated>
+                            <!-- Since 1.5.0-alpha.9 PDF back-end can use 'rouge' as well as 'coderay'
+                            source highlighting -->
+                            <!-- sourceHighlighter>rouge</sourceHighlighter>
+                            <attributes>
+                                <icons>font</icons>
+                                <pagenums />
+                                <toc />
+                                <idprefix />
+                                <idseparator>-</idseparator>
+                            </attributes -->
+                        </configuration>
+                    </execution>
+                    
+                </executions>
+            </plugin>
+            
+        </plugins>
+    </build>
+    
+    
+<repositories>
+        <repository>
+            <snapshots>
+                <enabled>false</enabled>
+            </snapshots>
+            <id>jcenter-releases</id>
+            <name>jcenter</name>
+            <url>http://jcenter.bintray.com</url>
+        </repository>
+    </repositories>
+    
+    <pluginRepositories>
+        <pluginRepository>
+            <id>jcenter-snapshots</id>
+            <name>jcenter</name>
+            <url>http://oss.jfrog.org/artifactory/oss-snapshot-local/</url>
+        </pluginRepository>
+        <pluginRepository>
+            <snapshots>
+                <enabled>false</enabled>
+            </snapshots>
+            <id>jcenter-releases</id>
+            <name>jcenter</name>
+            <url>http://jcenter.bintray.com</url>
+        </pluginRepository>
+</pluginRepositories>
+
+</project>
