@@ -1,0 +1,13 @@
+{
+"useBeanValidation": "true",
+"generateSpringApplication": "true",
+"useSwaggerFeature": "true",
+"useWadlFeature": "true",
+"useMultipartFeature": "true",
+"useGzipFeature": "true",
+"useLoggingFeature": "true",
+"useBeanValidationFeature": "true",
+"generateApiTests": "true",
+"generateSpringBootApplication": "true",
+"useJbossEap6DeploymentStructure": "true"
+} 
