@@ -1,0 +1,9 @@
+{
+"artifactId":"cxf_server_hello_basic",
+"useJaxbAnnotations": "false",
+"useBeanValidation": "true",
+"generateSpringApplication": "true",
+"useSwaggerFeature": "true",
+"generateSpringBootApplication": "true",
+"generateApiTests": "true"
+}

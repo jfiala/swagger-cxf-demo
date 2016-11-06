@@ -1,0 +1,13 @@
+{
+"artifactId":"cxf_server_hello_complete",
+"useBeanValidation": "true",
+"generateSpringApplication": "true",
+"useSwaggerFeature": "true",
+"useWadlFeature": "true",
+"useMultipartFeature": "true",
+"useGzipFeature": "true",
+"useLoggingFeature": "true",
+"useBeanValidationFeature": "true",
+"generateApiTests": "true",
+"generateSpringBootApplication": "true"
+}
