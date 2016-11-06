@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jboss-deployment-structure>
+    <deployment>
+        <dependencies>
+            <!-- Exclude JAX-RS: 2. Reimport javaee.api and exclude JAX-RS classes -->
+            <module name="javaee.api" >
+                <imports>  
+                    <exclude path="javax/ws/**" />
+                </imports>  
+            </module>  
+            
+        </dependencies>
+        <exclusions>
+            <!-- Exclude JAX-RS: 1. Exclude javaee.api  -->  
+            <module name="javaee.api" />  
+        </exclusions>
+        <!-- Exclude JAX-RS: 3. Exclude subsystem due to LinkageErrors (e.g. when showing swagger contract)  -->  
+        <exclude-subsystems>
+            <subsystem name="jaxrs" />
+        </exclude-subsystems>  
+    </deployment>
+</jboss-deployment-structure>
