@@ -3,7 +3,10 @@
 "useJaxbAnnotations": "false",
 "useBeanValidation": "true",
 "generateSpringApplication": "true",
+"useSpringAnnotationConfig": "true",
 "useSwaggerFeature": "true",
 "generateSpringBootApplication": "true",
-"generateApiTests": "true"
+"generateApiTests": "true",
+"generateJbossDeploymentDescriptor": "true",
+"useSwaggerUI": "true"
 }

@@ -9,25 +9,14 @@ import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlType;
 import javax.xml.bind.annotation.XmlEnum;
+import javax.xml.bind.annotation.XmlEnumValue;
 
-@XmlAccessorType(XmlAccessType.FIELD)
- @XmlType(name = "HelloModel", propOrder =
-    { "name", "greeting", "firstName"
-})
-
-@XmlRootElement(name="HelloModel")
 public class HelloModel  {
   
-
-  @XmlElement(name="name")
   @ApiModelProperty(example = "null", value = "")
   private String name = null;
-
-  @XmlElement(name="greeting")
   @ApiModelProperty(example = "null", value = "")
   private String greeting = null;
-
-  @XmlElement(name="firstName")
   @ApiModelProperty(example = "null", value = "")
   private String firstName = null;
 

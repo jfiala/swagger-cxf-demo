@@ -11,8 +11,6 @@
                            http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
                            http://www.springframework.org/schema/jee http://www.springframework.org/schema/jee/spring-jee.xsd">
 
-    
-    
     <import resource="classpath:META-INF/cxf/cxf.xml" />
 
     <!-- JAXRS providers -->
@@ -25,7 +23,8 @@
 
     <!-- CXF Swagger2Feature -->
     <bean id="swagger2Feature" class="org.apache.cxf.jaxrs.swagger.Swagger2Feature">
-        <property name="basePath" value="/services/services"/>
+        <!--property name="basePath" value="/services"/-->
+        <property name="supportSwaggerUi" value="true" />
         <!--property name="contact" value="${swagger.contact}" />
         <property name="title" value="${swagger.title}" />
         <property name="version" value="${swagger.version}" />
@@ -46,7 +45,6 @@
             <ref bean="validationOutInterceptor" />
         </cxf:outInterceptors>
         <cxf:features>
-            <cxf:logging />
             <ref bean="compressGZIPFeature"/>
         </cxf:features>
         <cxf:properties>

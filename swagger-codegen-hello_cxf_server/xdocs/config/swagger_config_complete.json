@@ -6,8 +6,12 @@
 "useWadlFeature": "true",
 "useMultipartFeature": "true",
 "useGzipFeature": "true",
-"useLoggingFeature": "true",
+"useLoggingFeature": "false",
 "useBeanValidationFeature": "true",
 "generateApiTests": "true",
-"generateSpringBootApplication": "true"
+"generateSpringBootApplication": "true",
+"useGzipFeatureForTests": "true",
+"useLoggingFeatureForTests": "false",
+"useSwaggerUI":"true",
+"useJaxbAnnotations":"false"
 }

@@ -25,8 +25,7 @@
 
 package io.swagger.api;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -34,8 +33,6 @@ import java.util.List;
 import org.apache.cxf.jaxrs.client.ClientConfiguration;
 import org.apache.cxf.jaxrs.client.JAXRSClientFactory;
 import org.apache.cxf.jaxrs.client.WebClient;
-import org.apache.cxf.transport.common.gzip.GZIPInInterceptor;
-import org.apache.cxf.transport.common.gzip.GZIPOutInterceptor;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -50,18 +47,18 @@ import com.fasterxml.jackson.jaxrs.json.JacksonJsonProvider;
 import io.swagger.model.HelloModel;
 
 
+
 /**
  * API tests for HelloApi
  */
-// @RunWith(BlockJUnit4ClassRunner.class)
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringApplicationConfiguration(classes = SpringBootApplication.class)
 @WebAppConfiguration
 @IntegrationTest("server.port=0")
-public class HelloApiTest {
+public class HelloApi_Implemented_Test {
 
     @Value("${local.server.port}")
-    private int serverPort; // = 8080;
+    private int serverPort;
 
     private HelloApi api;
     
@@ -71,17 +68,10 @@ public class HelloApiTest {
         List providers = new ArrayList();
         providers.add(provider);
         
-        api = JAXRSClientFactory.create("http://localhost:" + serverPort + "/services", HelloApi.class, providers);
+        api = JAXRSClientFactory.create("http://localhost:" + serverPort + "/services/services", HelloApi.class, providers);
         org.apache.cxf.jaxrs.client.Client client = WebClient.client(api);
         
         ClientConfiguration config = WebClient.getConfig(client); 
-        // Example for using Gzipping
-        GZIPOutInterceptor gzipOutInterceptor = new GZIPOutInterceptor();
-        // use Gzipping for first request sent to server
-        //gzipOutInterceptor.setForce(true);
-        config.getOutInterceptors().add(gzipOutInterceptor);
-        
-        config.getInInterceptors().add(new GZIPInInterceptor()); 
     }
 
     
@@ -95,32 +85,13 @@ public class HelloApiTest {
      */
     @Test
     public void sayHelloTest() {
-        String name = null;
-        String firstName = null;
-        //String response = api.sayHello(name, firstName);
-        //assertNotNull(response);
-        // TODO: test validations
-        
-        
-    }
-    
-    /**
-     * 
-     *
-     * 
-     *
-     * @throws ApiException
-     *          if the Api call fails
-     */
-    @Test
-    public void sayHelloVoidTest() {
-        String name = null;
-        String firstName = null;
-        //api.sayHelloVoid(name, firstName);
-        
-        // TODO: test validations
-        
-        
+        String name = "test";
+        String firstName = "firstname";
+        String response = api.sayHello(name, firstName);
+        System.out.println("response: " +  response);
+        assertNotNull(response);
+        assertEquals("hello " + firstName + " " + name, response);
+
     }
     
     /**
@@ -133,53 +104,12 @@ public class HelloApiTest {
      */
     @Test
     public void sayHelloWithModelTest() {
-        String name = null;
-        String firstName = null;
-        //HelloModel response = api.sayHelloWithModel(name, firstName);
-        //assertNotNull(response);
-        // TODO: test validations
-        
-        
-    }
-    
-    /**
-     * 
-     *
-     * 
-     *
-     * @throws ApiException
-     *          if the Api call fails
-     */
-    @Test
-    public void sayHelloWithRequestModelTest() {
-        HelloModel request = new HelloModel();
-        request.setFirstName("firstName");
-        request.setName("name");
-        HelloModel response = api.helloRequest("test", request);
+        String name = "test";
+        String firstName = "firstname";
+        HelloModel response = api.sayHelloWithModel(name, firstName);
         assertNotNull(response);
-        assertEquals(request.getName(), response.getName());
-        // TODO: test validations
-        
-        
-    }
-    
-    /**
-     * uploads an image
-     *
-     * 
-     *
-     * @throws ApiException
-     *          if the Api call fails
-     */
-    @Test
-    public void uploadFileTest() {
-        String name = null;
-        org.apache.cxf.jaxrs.ext.multipart.Attachment file = null;
-        //api.uploadFile(name, file);
-        
-        // TODO: test validations
-        
-        
+        assertEquals("hello " + firstName + " " + name, response.getGreeting());
+
     }
     
 }
