@@ -1,0 +1,5 @@
+{
+"artifactId":"hello_client_java",
+"useBeanValidation": "false",
+"performBeanValidation": "false"
+}

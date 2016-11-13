@@ -25,26 +25,40 @@
 
 package io.swagger.client.api;
 
-import static org.junit.Assert.assertNotNull;
-
-import java.util.logging.Logger;
-
+import io.swagger.client.ApiException;
+import io.swagger.client.model.HelloModel;
+import java.io.File;
 import org.junit.Test;
 
-import io.swagger.client.ApiException;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * API tests for HelloApi
  */
 public class HelloApiTest {
-	/**
-	* Logger for this class
-	*/
-	private static final Logger log = Logger.getLogger(HelloApiTest.class.getName());
-	
 
     private final HelloApi api = new HelloApi();
 
+    
+    /**
+     * helloRequest
+     *
+     * 
+     *
+     * @throws ApiException
+     *          if the Api call fails
+     */
+    @Test
+    public void helloRequestTest() throws ApiException {
+        String name = null;
+        HelloModel body = null;
+        // HelloModel response = api.helloRequest(name, body);
+
+        // TODO: test validations
+    }
     
     /**
      * 
@@ -56,12 +70,44 @@ public class HelloApiTest {
      */
     @Test
     public void sayHelloTest() throws ApiException {
-    	api.getApiClient().setBasePath("http://localhost:8180/swagger-cxf-server/rest/services");
-        String name = "test";
-        String response = api.sayHello(name, "test");
-        assertNotNull(response);
-        System.out.println("response: " + response);
-        log.info("response: " +response);
+        String name = null;
+        String firstName = null;
+        // String response = api.sayHello(name, firstName);
+
+        // TODO: test validations
+    }
+    
+    /**
+     * 
+     *
+     * 
+     *
+     * @throws ApiException
+     *          if the Api call fails
+     */
+    @Test
+    public void sayHelloWithModelTest() throws ApiException {
+        String name = null;
+        String firstName = null;
+        // HelloModel response = api.sayHelloWithModel(name, firstName);
+
+        // TODO: test validations
+    }
+    
+    /**
+     * uploads an image
+     *
+     * 
+     *
+     * @throws ApiException
+     *          if the Api call fails
+     */
+    @Test
+    public void uploadFileTest() throws ApiException {
+        String name = null;
+        File file = null;
+        // String response = api.uploadFile(name, file);
+
         // TODO: test validations
     }
     

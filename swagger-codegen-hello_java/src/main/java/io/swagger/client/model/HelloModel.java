@@ -29,17 +29,21 @@ import java.util.Objects;
 import com.google.gson.annotations.SerializedName;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
+import javax.validation.constraints.*;
 
 /**
  * HelloModel
  */
-@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaClientCodegen", date = "2016-11-04T17:20:56.380+01:00")
+@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaClientCodegen", date = "2016-11-12T22:47:02.353+01:00")
 public class HelloModel {
   @SerializedName("name")
   private String name = null;
 
   @SerializedName("greeting")
   private String greeting = null;
+
+  @SerializedName("firstName")
+  private String firstName = null;
 
   public HelloModel name(String name) {
     this.name = name;
@@ -50,7 +54,9 @@ public class HelloModel {
    * Get name
    * @return name
   **/
-  @ApiModelProperty(example = "null", value = "")
+  @NotNull
+  @Size(min=1,max=255)
+  @ApiModelProperty(example = "null", required = true, value = "")
   public String getName() {
     return name;
   }
@@ -77,6 +83,25 @@ public class HelloModel {
     this.greeting = greeting;
   }
 
+  public HelloModel firstName(String firstName) {
+    this.firstName = firstName;
+    return this;
+  }
+
+   /**
+   * Get firstName
+   * @return firstName
+  **/
+  @Size(min=1,max=255)
+  @ApiModelProperty(example = "null", value = "")
+  public String getFirstName() {
+    return firstName;
+  }
+
+  public void setFirstName(String firstName) {
+    this.firstName = firstName;
+  }
+
 
   @Override
   public boolean equals(java.lang.Object o) {
@@ -88,12 +113,13 @@ public class HelloModel {
     }
     HelloModel helloModel = (HelloModel) o;
     return Objects.equals(this.name, helloModel.name) &&
-        Objects.equals(this.greeting, helloModel.greeting);
+        Objects.equals(this.greeting, helloModel.greeting) &&
+        Objects.equals(this.firstName, helloModel.firstName);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(name, greeting);
+    return Objects.hash(name, greeting, firstName);
   }
 
 
@@ -104,6 +130,7 @@ public class HelloModel {
     
     sb.append("    name: ").append(toIndentedString(name)).append("\n");
     sb.append("    greeting: ").append(toIndentedString(greeting)).append("\n");
+    sb.append("    firstName: ").append(toIndentedString(firstName)).append("\n");
     sb.append("}");
     return sb.toString();
   }
