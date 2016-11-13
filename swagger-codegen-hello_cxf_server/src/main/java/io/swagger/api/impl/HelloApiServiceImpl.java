@@ -22,25 +22,24 @@ public class HelloApiServiceImpl implements HelloApi {
         HelloModel model = new HelloModel();
         model.setName(body.getName());
         model.setFirstName(body.getFirstName());
+        model.setGreeting("hello " + body.getFirstName() + " " + body.getName());
         return model;
     }
     
     public String  sayHello(String name, String firstName) {
-        // TODO: Implement...
-        
-        return null;
+        return "hello " + firstName + " " + name;
     }
     
     public HelloModel  sayHelloWithModel(String name, String firstName) {
-        // TODO: Implement...
-        
-        return null;
+        HelloModel model = new HelloModel();
+        model.setName(name);
+        model.setFirstName(firstName);
+        model.setGreeting("hello " + firstName + " " + name);
+        return model;
     }
     
-    public void  uploadFile(String name,  Attachment fileDetail) {
-        // TODO: Implement...
-        
-        
+    public String uploadFile(String name, Attachment fileDetail) {
+        return fileDetail.getDataHandler().getName();
     }
     
 }

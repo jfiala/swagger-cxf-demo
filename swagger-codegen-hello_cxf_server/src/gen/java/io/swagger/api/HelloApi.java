@@ -14,6 +14,8 @@ import org.apache.cxf.jaxrs.ext.multipart.*;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
+
 import javax.validation.constraints.*;
 
 @Path("/")
@@ -42,6 +44,6 @@ public interface HelloApi  {
     @Consumes({ "multipart/form-data" })
     @Produces({ "application/json", "application/xml" })
     @ApiOperation(value = "uploads an image", tags={ "hello" })
-    public void  uploadFile(@QueryParam("name") @NotNull @Size(min=1,max=255) String name,  @Multipart(value = "file" , required = false) Attachment fileDetail);
+    public String  uploadFile(@QueryParam("name") @NotNull @Size(min=1,max=255) String name,  @Multipart(value = "file" , required = false) Attachment fileDetail);
 }
 

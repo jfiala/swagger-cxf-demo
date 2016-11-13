@@ -1,15 +1,9 @@
 package io.swagger.model;
 
-import javax.validation.constraints.*;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 import io.swagger.annotations.ApiModelProperty;
-import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlAccessType;
-import javax.xml.bind.annotation.XmlAccessorType;
-import javax.xml.bind.annotation.XmlType;
-import javax.xml.bind.annotation.XmlEnum;
-import javax.xml.bind.annotation.XmlEnumValue;
 
 public class HelloModel  {
   
@@ -24,6 +18,8 @@ public class HelloModel  {
    * Get name
    * @return name
   **/
+    @NotNull
+    @Size(min = 1, max = 255)
   public String getName() {
     return name;
   }
