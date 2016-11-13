@@ -1,0 +1,132 @@
+{
+  "swagger" : "2.0",
+  "info" : {
+    "description" : "The Application",
+    "version" : "1.0.0",
+    "title" : "Sample REST Application",
+    "contact" : {
+      "name" : "users@cxf.apache.org"
+    },
+    "license" : {
+      "name" : "Apache 2.0 License",
+      "url" : "http://www.apache.org/licenses/LICENSE-2.0.html"
+    }
+  },
+  "basePath" : "/services",
+  "tags" : [ {
+    "name" : "hello"
+  } ],
+  "paths" : {
+    "/hello" : {
+      "get" : {
+        "tags" : [ "hello" ],
+        "summary" : "",
+        "description" : "",
+        "operationId" : "sayHello",
+        "parameters" : [ {
+          "name" : "name",
+          "in" : "query",
+          "required" : true,
+          "type" : "string",
+          "maxItems" : 255,
+          "minItems" : 0
+        }, {
+          "name" : "firstName",
+          "in" : "query",
+          "required" : true,
+          "type" : "string",
+          "maxItems" : 255,
+          "minItems" : 0
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "type" : "string"
+            }
+          }
+        }
+      }
+    },
+    "/helloGreeting" : {
+      "get" : {
+        "tags" : [ "hello" ],
+        "summary" : "",
+        "description" : "",
+        "operationId" : "sayHelloWithModel",
+        "parameters" : [ {
+          "name" : "name",
+          "in" : "query",
+          "required" : true,
+          "type" : "string",
+          "maxItems" : 255,
+          "minItems" : 1
+        }, {
+          "name" : "firstName",
+          "in" : "query",
+          "required" : true,
+          "type" : "string",
+          "maxItems" : 255,
+          "minItems" : 0
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "$ref" : "#/definitions/HelloModel"
+            }
+          }
+        }
+      }
+    },
+    "/helloGreetingVoid" : {
+      "get" : {
+        "tags" : [ "hello" ],
+        "summary" : "",
+        "description" : "",
+        "operationId" : "sayHelloVoid",
+        "parameters" : [ {
+          "name" : "name",
+          "in" : "query",
+          "required" : true,
+          "type" : "string",
+          "maxItems" : 255,
+          "minItems" : 1
+        }, {
+          "name" : "firstName",
+          "in" : "query",
+          "required" : true,
+          "type" : "string",
+          "maxItems" : 255,
+          "minItems" : 0
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation"
+          }
+        }
+      }
+    }
+  },
+  "definitions" : {
+    "HelloModel" : {
+      "type" : "object",
+      "properties" : {
+        "name" : {
+          "type" : "string",
+          "example" : "null"
+        },
+        "greeting" : {
+          "type" : "string",
+          "example" : "null"
+        },
+        "firstName" : {
+          "type" : "string"
+        }
+      },
+      "xml" : {
+        "name" : "HelloModel"
+      }
+    }
+  }
+}
