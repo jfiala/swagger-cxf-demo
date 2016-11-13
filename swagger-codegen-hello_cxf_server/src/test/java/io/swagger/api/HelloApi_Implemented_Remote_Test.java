@@ -25,7 +25,8 @@
 
 package io.swagger.api;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -36,11 +37,7 @@ import org.apache.cxf.jaxrs.client.WebClient;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.boot.test.IntegrationTest;
-import org.springframework.boot.test.SpringApplicationConfiguration;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import org.springframework.test.context.web.WebAppConfiguration;
+import org.junit.runners.BlockJUnit4ClassRunner;
 
 import com.fasterxml.jackson.jaxrs.json.JacksonJsonProvider;
 
@@ -51,14 +48,10 @@ import io.swagger.model.HelloModel;
 /**
  * API tests for HelloApi
  */
-@RunWith(SpringJUnit4ClassRunner.class)
-@SpringApplicationConfiguration(classes = SpringBootApplication.class)
-@WebAppConfiguration
-@IntegrationTest("server.port=0")
-public class HelloApi_Implemented_Test {
+@RunWith(BlockJUnit4ClassRunner.class)
+public class HelloApi_Implemented_Remote_Test {
 
-    @Value("${local.server.port}")
-    private int serverPort;
+    private int serverPort = 8080;
 
     private HelloApi api;
     

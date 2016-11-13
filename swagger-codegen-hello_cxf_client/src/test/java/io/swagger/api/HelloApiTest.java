@@ -25,40 +25,35 @@
 
 package io.swagger.api;
 
-import static org.junit.Assert.*;
-
-import java.util.ArrayList;
-import java.util.List;
-
-import org.apache.cxf.jaxrs.client.ClientConfiguration;
-import org.apache.cxf.jaxrs.client.JAXRSClientFactory;
-import org.apache.cxf.jaxrs.client.WebClient;
-import org.junit.Before;
+import io.swagger.model.HelloModel;
+import java.io.File;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.boot.test.IntegrationTest;
-import org.springframework.boot.test.SpringApplicationConfiguration;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import org.springframework.test.context.web.WebAppConfiguration;
+import org.junit.Before;
+
+import javax.ws.rs.core.Response;
+import org.apache.cxf.jaxrs.client.JAXRSClientFactory;
+import org.apache.cxf.jaxrs.client.ClientConfiguration;
+import org.apache.cxf.jaxrs.client.WebClient;
+import org.apache.cxf.transport.common.gzip.GZIPInInterceptor;
+import org.apache.cxf.transport.common.gzip.GZIPOutInterceptor;
+
 
 import com.fasterxml.jackson.jaxrs.json.JacksonJsonProvider;
+import com.google.common.net.MediaType;
 
-import io.swagger.model.HelloModel;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 
 
 
 /**
  * API tests for HelloApi
  */
-@RunWith(SpringJUnit4ClassRunner.class)
-@SpringApplicationConfiguration(classes = SpringBootApplication.class)
-@WebAppConfiguration
-@IntegrationTest("server.port=0")
-public class HelloApi_Implemented_Test {
+public class HelloApiTest {
 
-    @Value("${local.server.port}")
-    private int serverPort;
 
     private HelloApi api;
     
@@ -68,12 +63,38 @@ public class HelloApi_Implemented_Test {
         List providers = new ArrayList();
         providers.add(provider);
         
-        api = JAXRSClientFactory.create("http://localhost:" + serverPort + "/services", HelloApi.class, providers);
+        api = JAXRSClientFactory.create("http://localhost:8080/services", HelloApi.class, providers);
         org.apache.cxf.jaxrs.client.Client client = WebClient.client(api);
         
+        // client.acceptEncoding(encodings)
+
         ClientConfiguration config = WebClient.getConfig(client); 
+        // Example for using Gzipping
+        // GZIPOutInterceptor gzipOutInterceptor = new GZIPOutInterceptor();
+        // // use Gzipping for first request sent to server
+        // //gzipOutInterceptor.setForce(true);
+        // config.getOutInterceptors().add(gzipOutInterceptor);
+        //
+        // config.getInInterceptors().add(new GZIPInInterceptor());
     }
 
+    
+    /**
+     * helloRequest
+     *
+     * 
+     *
+     * @throws ApiException
+     *          if the Api call fails
+     */
+    @Test
+    public void helloRequestTest() {
+        String name = null;
+        HelloModel body = null;
+        // HelloModel response = api.helloRequest(name, body);
+
+        // TODO: test validations
+    }
     
     /**
      * 
@@ -85,13 +106,11 @@ public class HelloApi_Implemented_Test {
      */
     @Test
     public void sayHelloTest() {
-        String name = "test";
-        String firstName = "firstname";
+        String name = "name";
+        String firstName = "firstName";
         String response = api.sayHello(name, firstName);
-        System.out.println("response: " +  response);
-        assertNotNull(response);
-        assertEquals("hello " + firstName + " " + name, response);
 
+        // TODO: test validations
     }
     
     /**
@@ -104,12 +123,28 @@ public class HelloApi_Implemented_Test {
      */
     @Test
     public void sayHelloWithModelTest() {
-        String name = "test";
-        String firstName = "firstname";
+        String name = "name";
+        String firstName = "firstName";
         HelloModel response = api.sayHelloWithModel(name, firstName);
-        assertNotNull(response);
-        assertEquals("hello " + firstName + " " + name, response.getGreeting());
 
+        // TODO: test validations
+    }
+    
+    /**
+     * uploads an image
+     *
+     * 
+     *
+     * @throws ApiException
+     *          if the Api call fails
+     */
+    @Test
+    public void uploadFileTest() {
+        String name = null;
+        File file = null;
+        // String response = api.uploadFile(name, file);
+
+        // TODO: test validations
     }
     
 }
