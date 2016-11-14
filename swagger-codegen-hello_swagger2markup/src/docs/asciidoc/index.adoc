@@ -1,0 +1,13 @@
+:toc-title: Inhaltverzeichnis
+:chapter-label: Kapitel
+
+:revnumber: ${buildNumber}
+include::manual_content1.adoc[]
+include::{generated}/overview.adoc[]  
+//== Inhaltsverzeichnis
+toc::[]
+// include::manual_content2.adoc[]  
+include::{generated}/paths.adoc[]  
+include::{generated}/security.adoc[]
+include::{generated}/definitions.adoc[]
+  
