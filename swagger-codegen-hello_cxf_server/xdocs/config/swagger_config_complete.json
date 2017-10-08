@@ -13,5 +13,6 @@
 "useGzipFeatureForTests": "true",
 "useLoggingFeatureForTests": "false",
 "useSwaggerUI":"true",
-"useJaxbAnnotations":"false"
+"useJaxbAnnotations":"false",
+"addConsumesProducesJson":"true"
 }
