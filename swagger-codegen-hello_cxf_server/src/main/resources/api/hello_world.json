@@ -53,7 +53,14 @@
                             "type": "string"
                         }
                     }
-                }
+                },
+                "security": [
+                    {
+                        "HelloWorldAuth": [
+                            "read:hello_world"
+                        ]
+                    }
+                ]
             }
         },
         "/helloGreeting": {
@@ -158,7 +165,7 @@
                         "name": "body",
                         "required": false,
                         "schema": {
-                            "$ref": "#/definitions/HelloModel"
+                            "$ref": "#/definitions/ExtendedHelloModel"
                         }
                     }
                 ],
@@ -174,6 +181,14 @@
         
         }
     },
+    "securityDefinitions": {
+        "HelloWorldAuth": {
+            "type": "basic",
+            "scopes": {
+                "read:hello_world": "read hello world greetings"
+            }
+        }
+    },
     "definitions": {
         "HelloModel": {
             "type": "object",
@@ -184,19 +199,56 @@
                 "name": {
                     "type": "string",
                     "minLength": 1,
-                    "maxLength": 255
+                    "maxLength": 255,
+                    "pattern": "/[a-z]/",
+                    "description":"name"
                 },
                 "greeting": {
-                    "type": "string"
+                    "type": "string",
+                    "description": "the full greeting"
                 },
                 "firstName": {
                     "type": "string",
                     "minLength": 1,
-                    "maxLength": 255
+                    "maxLength": 255,
+                    "description": "first name"
                     
                 }
+            },
+            "example": {"name": "test extended", "firstName":"testfirst"}    
+        },
+        "ExtendedHelloModel": {
+            "allOf": [
+                {
+                "$ref": "#/definitions/HelloModel"
+                },
+                 {
+              "type": "object",
+              "required": [
+                "rootCause"
+              ],
+              "properties": {
+                "rootCause": {
+                  "type": "string",
+                  "description":"root cause type",
+                  "$ref": "#/definitions/media_types"
+                }
+              }
             }
+            ],
+            "example": {"name": "test extended", "firstName":"testfirst", "rootCause":"application/json"}            
+       },
+       
+       "media_types": {
+          "description": "different media types",
+            "type" : "string",
+            "enum" : [ "application/pdf", "application/json" ]
+         
         }
+        
+       
     }
+    
+    
 
 }
