@@ -1,0 +1,264 @@
+{
+
+    "swagger": "2.0",
+    "info": {
+        "description": "The Application",
+        "version": "1.0.0",
+        "title": "Sample REST Application",
+        "contact": {
+            "name": "users@cxf.apache.org"
+        },
+        "license": {
+            "name": "Apache 2.0 License",
+            "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
+        }
+    },
+    "basePath": "/services",
+    "tags": [
+        {
+            "name": "hello"
+        }
+    ],
+    "paths": {
+        "/hello": {
+            "get": {
+                "tags": [
+                    "hello"
+                ],
+                "summary": "",
+                "description": "",
+                "operationId": "sayHello",
+                "parameters": [
+                    {
+                        "name": "name",
+                        "in": "query",
+                        "required": true,
+                        "type": "string",
+                        "maxItems": 255,
+                        "minItems": 1
+                    },
+                    {
+                        "name": "firstName",
+                        "in": "query",
+                        "required": true,
+                        "type": "string",
+                        "maxItems": 255,
+                        "minItems": 1
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "HelloWorldAuth": [
+                            "read:hello_world"
+                        ]
+                    }
+                ]
+            }
+        },
+        "/helloGreeting": {
+            "get": {
+                "tags": [
+                    "hello"
+                ],
+                "summary": "",
+                "description": "",
+                "operationId": "sayHelloWithModel",
+                "parameters": [
+                    {
+                        "name": "name",
+                        "in": "query",
+                        "required": true,
+                        "type": "string",
+                        "maxItems": 255,
+                        "minItems": 1
+                    },
+                    {
+                        "name": "firstName",
+                        "in": "query",
+                        "required": true,
+                        "type": "string",
+                        "maxItems": 255,
+                        "minItems": 1
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "schema": {
+                            "$ref": "#/definitions/HelloModel"
+                        }
+                    }
+                },
+                "security":[{"petstore_auth":["write:pets","read:pets"]}]
+            }
+        },
+        "/uploadImage": {
+          "post": {
+            "tags": [
+              "hello"
+            ],
+            "summary": "uploads an image",
+            "description": "",
+            "operationId": "uploadFile",
+            "consumes": [
+              "multipart/form-data"
+            ],
+            "produces": [
+              "application/json",
+              "application/xml"
+            ],
+            "parameters": [
+              {
+                "name": "name",
+                "in": "query",
+                "description": "the name",
+                "required": true,
+                "type": "string",
+                "maxItems": 255,
+                "minItems": 1
+              },
+              {
+                "name": "file",
+                "in": "formData",
+                "description": "file to upload",
+                "required": false,
+                "type": "file"
+              }
+            ],
+            "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+        }
+      } ,
+        "/helloRequest": {
+        
+            "post": {
+                "tags": [
+                    "hello"
+                ],
+                "summary": "helloRequest",
+                "description": "",
+                "operationId": "helloRequest",
+                "parameters": [
+                    {
+                        "name": "name",
+                        "in": "query",
+                        "required": true,
+                        "type": "string",
+                        "maxItems": 255,
+                        "minItems": 1
+                    },
+                    {
+                        "in": "body",
+                        "name": "body",
+                        "required": false,
+                        "schema": {
+                            "$ref": "#/definitions/ExtendedHelloModel"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "schema": {
+                            "$ref": "#/definitions/HelloModel"
+                        }
+                    }
+                }
+            }
+        
+        }
+    },
+    "securityDefinitions": {
+        "HelloWorldAuth": {
+            "type": "basic",
+            "scopes": {
+                "read:hello_world": "read hello world greetings"
+            }
+        },
+        "petstore_auth": {
+            "type":"oauth2",
+            "authorizationUrl":"http://petstore.swagger.io/oauth/dialog",
+            "flow":"implicit",
+            "scopes":{
+            "write:pets":"modify pets in your account",
+            "read:pets":"read your pets"
+            }
+        }
+    },
+    "definitions": {
+        "HelloModel": {
+            "type": "object",
+            "required": [
+                "name"
+            ],
+            "properties": {
+                "name": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 255,
+                    "pattern": "/[a-z]/",
+                    "description":"name"
+                },
+                "greeting": {
+                    "type": "string",
+                    "description": "the full greeting"
+                },
+                "firstName": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 255,
+                    "description": "first name"
+                    
+                }
+            },
+            "example": {"name": "test extended", "firstName":"testfirst"}    
+        },
+        "ExtendedHelloModel": {
+            "allOf": [
+                {
+                "$ref": "#/definitions/HelloModel"
+                },
+                 {
+              "type": "object",
+              "required": [
+                "rootCause"
+              ],
+              "properties": {
+                "rootCause": {
+                  "type": "string",
+                  "description":"root cause type",
+                  "$ref": "#/definitions/media_types"
+                }
+              }
+            }
+            ],
+            "example": {"name": "test extended", "firstName":"testfirst", "rootCause":"application/json"}            
+       },
+       
+       "media_types": {
+          "description": "different media types",
+            "type" : "string",
+            "enum" : [ "application/pdf", "application/json" ]
+         
+        }
+        
+       
+    }
+    
+    
+
+}

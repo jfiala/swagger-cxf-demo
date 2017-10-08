@@ -1,5 +1,7 @@
 package io.swagger.model;
 
+import io.swagger.model.HelloModel;
+import io.swagger.model.MediaTypes;
 import javax.validation.constraints.*;
 
 import io.swagger.annotations.ApiModelProperty;
@@ -11,7 +13,7 @@ import javax.xml.bind.annotation.XmlType;
 import javax.xml.bind.annotation.XmlEnum;
 import javax.xml.bind.annotation.XmlEnumValue;
 
-public class HelloModel  {
+public class ExtendedHelloModel  {
   
   @ApiModelProperty(required = true, value = "name")
   private String name = null;
@@ -19,6 +21,8 @@ public class HelloModel  {
   private String greeting = null;
   @ApiModelProperty(value = "first name")
   private String firstName = null;
+  @ApiModelProperty(required = true, value = "root cause type")
+  private MediaTypes rootCause = null;
 
  /**
    * name
@@ -33,7 +37,7 @@ public class HelloModel  {
     this.name = name;
   }
 
-  public HelloModel name(String name) {
+  public ExtendedHelloModel name(String name) {
     this.name = name;
     return this;
   }
@@ -50,7 +54,7 @@ public class HelloModel  {
     this.greeting = greeting;
   }
 
-  public HelloModel greeting(String greeting) {
+  public ExtendedHelloModel greeting(String greeting) {
     this.greeting = greeting;
     return this;
   }
@@ -67,8 +71,26 @@ public class HelloModel  {
     this.firstName = firstName;
   }
 
-  public HelloModel firstName(String firstName) {
+  public ExtendedHelloModel firstName(String firstName) {
     this.firstName = firstName;
+    return this;
+  }
+
+ /**
+   * root cause type
+   * @return rootCause
+  **/
+  @NotNull
+  public MediaTypes getRootCause() {
+    return rootCause;
+  }
+
+  public void setRootCause(MediaTypes rootCause) {
+    this.rootCause = rootCause;
+  }
+
+  public ExtendedHelloModel rootCause(MediaTypes rootCause) {
+    this.rootCause = rootCause;
     return this;
   }
 
@@ -76,11 +98,12 @@ public class HelloModel  {
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class HelloModel {\n");
+    sb.append("class ExtendedHelloModel {\n");
     
     sb.append("    name: ").append(toIndentedString(name)).append("\n");
     sb.append("    greeting: ").append(toIndentedString(greeting)).append("\n");
     sb.append("    firstName: ").append(toIndentedString(firstName)).append("\n");
+    sb.append("    rootCause: ").append(toIndentedString(rootCause)).append("\n");
     sb.append("}");
     return sb.toString();
   }
